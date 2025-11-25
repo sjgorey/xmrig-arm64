@@ -8,5 +8,6 @@ RUN git clone --depth 1 --branch v6.21.0 https://github.com/xmrig/xmrig.git /xmr
     && strip xmrig
 
 FROM --platform=linux/arm64 alpine:latest
-COPY --from=0 /xmrig/build/xmrig /usr/local/bin/xmrig
+RUN apk add --no-cache libuv hwloc
+COPY --from=builder /xmrig/build/xmrig /usr/local/bin/xmrig
 ENTRYPOINT ["xmrig"]
